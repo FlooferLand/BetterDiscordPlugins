@@ -1,0 +1,2 @@
+# BetterDiscordPlugins
+BD go brrr
