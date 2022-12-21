@@ -10,7 +10,7 @@
 
 module.exports = (() => {
 	/* Configuration */
-	const config = require("./MemeSoundsPlus.config.js");
+	const config = require("https://github.com/FlooferLand/BetterDiscordPlugins/blob/main/MemeSoundsPlus/MemeSoundsPlus.config.js");
 
 	/* Library Stuff */
 	return !global.ZeresPluginLibrary ? class {
