@@ -9,8 +9,22 @@
  */
 
 module.exports = (() => {
+	// Importing in a custom config JS file
+	const fs = require("fs");
+	if (!fs.existsSync("./MemeSoundsPlus.config.js")) {
+		require("request").get(
+			"https://github.com/FlooferLand/BetterDiscordPlugins/blob/main/MemeSoundsPlus/MemeSoundsPlus.config.js",
+			async (err, res, body) => {
+				if (err) return;
+				await new Promise(
+					r => fs.writeFile(require("path").join(BdApi.Plugins.folder, "MemeSoundsPlus.config.js"), body, r)
+				);
+			}
+		);
+	}
+
 	/* Configuration */
-	const config = require("https://github.com/FlooferLand/BetterDiscordPlugins/blob/main/MemeSoundsPlus/MemeSoundsPlus.config.js");
+	const config = require("./MemeSoundsPlus.config.js");
 
 	/* Library Stuff */
 	return !global.ZeresPluginLibrary ? class {
@@ -34,22 +48,11 @@ module.exports = (() => {
 								if (err) return;
 								require("electron").shell.openExternal("https://betterdiscord.app/Download?id=9");
 								await new Promise(
-									r => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body, r)
+									r => fs.writeFile(require("path").join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body, r)
 								);
 							}
 						);
 					}
-				}
-			);
-
-			// Custom MemeSoundsPlus config JS
-			require("request").get(
-				"https://github.com/FlooferLand/BetterDiscordPlugins/blob/main/MemeSoundsPlus/MemeSoundsPlus.config.js",
-				async (err, res, body) => {
-					if (err) return;
-					await new Promise(
-						r => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "MemeSoundsPlus.config.js"), body, r)
-					);
 				}
 			);
 		}
