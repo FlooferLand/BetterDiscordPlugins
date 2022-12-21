@@ -19,7 +19,40 @@ module.exports = (() => {
         getAuthor() {return config.info.authors.map(a => a.name).join(", ");}
         getDescription() {return config.info.description;}
         getVersion() {return config.info.version;}
-		load() {BdApi.showConfirmationModal("Library Missing", `The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`, {confirmText: "Download Now", cancelText: "Cancel", onConfirm: () => {require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (err, res, body) => {if (err) return require("electron").shell.openExternal("https://betterdiscord.app/Download?id=9"); await new Promise(r => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body, r));});}});}
+		load() {
+			// ZeresPluginLibrary
+			BdApi.showConfirmationModal(
+				"Library Missing",
+				`The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`,
+				{
+					confirmText: "Download Now",
+					cancelText: "Cancel",
+					onConfirm: () => {
+						require("request").get(
+							"https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js",
+							async (err, res, body) => {
+								if (err) return;
+								require("electron").shell.openExternal("https://betterdiscord.app/Download?id=9");
+								await new Promise(
+									r => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body, r)
+								);
+							}
+						);
+					}
+				}
+			);
+
+			// Custom MemeSoundsPlus config JS
+			require("request").get(
+				"https://github.com/FlooferLand/BetterDiscordPlugins/blob/main/MemeSoundsPlus/MemeSoundsPlus.config.js",
+				async (err, res, body) => {
+					if (err) return;
+					await new Promise(
+						r => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "MemeSoundsPlus.config.js"), body, r)
+					);
+				}
+			);
+		}
 		start() { }
 		stop() { }
 	} : (([Plugin, Api]) => {
