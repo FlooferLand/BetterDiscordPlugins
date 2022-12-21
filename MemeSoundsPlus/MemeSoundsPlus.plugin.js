@@ -15,9 +15,9 @@ module.exports = (() => {
 	if (!fs.existsSync(configPath)) {
 		require("request").get(
 			"https://github.com/FlooferLand/BetterDiscordPlugins/blob/main/MemeSoundsPlus/MemeSoundsPlus.config.js",
-			async (err, res, body) => {
+			(err, res, body) => {
 				if (err) return;
-				await new Promise(
+				new Promise(
 					r => fs.writeFile(configPath, body, r)
 				);
 			}
